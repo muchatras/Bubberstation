@@ -386,21 +386,14 @@
 	worn_icon = 'modular_skyrat/master_files/icons/mob/clothing/head/helmet.dmi'
 	icon_state = "security_helmet"
 	base_icon_state = "security_helmet"
+	unique_reskin_changes_base_icon_state = TRUE
 	clothing_flags = SNUG_FIT | STACKABLE_HELMET_EXEMPT
 	dog_fashion = null
 	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON
-	uses_advanced_reskins = TRUE
+	uses_advanced_reskins = FALSE
 	unique_reskin = list(
-		"White Variant" = list(
-			RESKIN_ICON_STATE = "security_helmet",
-			RESKIN_WORN_ICON_STATE = "security_helmet"
-		),
-		"Red Variant" = list(
-			RESKIN_ICON = 'icons/obj/clothing/head/helmet.dmi',
-			RESKIN_ICON_STATE = "helmet",
-			RESKIN_WORN_ICON_STATE = "helmet",
-			RESKIN_WORN_ICON = 'icons/mob/clothing/head/helmet.dmi'
-		),
+		"White Variant" = "security_helmet",
+		"Red Variant" = "security_helmet"
 	)
 
 /obj/item/clothing/head/helmet/sec/click_alt(mob/user)
@@ -409,10 +402,13 @@
 	// base_icon_state is modified for seclight attachment component
 	base_icon_state = "[initial(base_icon_state)][flipped_visor ? "-novisor" : ""]"
 	icon_state = base_icon_state
+	worn_icon_state = base_icon_state
 	if (flipped_visor)
 		flags_cover &= ~HEADCOVERSEYES | PEPPERPROOF
+		playsound(src, SFX_VISOR_DOWN, 20, TRUE, -1)
 	else
 		flags_cover |= HEADCOVERSEYES | PEPPERPROOF
+		playsound(src, SFX_VISOR_UP, 20, TRUE, -1)
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
