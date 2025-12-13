@@ -393,7 +393,7 @@
 	uses_advanced_reskins = FALSE
 	unique_reskin = list(
 		"White Variant" = "security_helmet",
-		"Red Variant" = "security_helmet"
+		"Red Variant" = "red_security_helmet"
 	)
 
 /obj/item/clothing/head/helmet/sec/click_alt(mob/user)
@@ -412,6 +412,15 @@
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
+/obj/item/clothing/head/helmet/sec/update_icon_state()
+	. = ..()
+	base_icon_state = "[initial(base_icon_state)]"
+	var/datum/component/seclite_attachable/light = GetComponent(/datum/component/seclite_attachable)
+	if(up)
+		base_icon_state += "up"
+	light?.on_update_icon_state(src)
+	if(!light)
+		icon_state = base_icon_state
 
 /obj/item/clothing/head/helmet/sec/futuristic
 	icon_state = "security_helmet_future"
